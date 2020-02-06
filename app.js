@@ -14,6 +14,40 @@ app.get("/",(req,res)=>{
     res.render("home.ejs");
 })
 
+
+
+app.get("/login",(req,res)=>{
+    res.render("login");
+})
+
+app.post("/login",(req,res)=>{
+
+})
+
+
+
+
+
+app.route("/registration").all((req,res,next)=>{
+    next()
+})
+.get((req,res)=>{
+    res.render("registration");
+})
+.post((req,res)=>{
+    console.log(req.body.fname);
+    console.log(req.body.lname);
+    console.log(req.body.uname);
+    console.log(req.body.password);
+    console.log(req.body.email);
+    console.log(req.body.mobile);
+
+})
+
+
+app.get("/menu",(req,res)=>{
+    res.render("Menu")
+})
 app.listen(3000,()=>{
-    console.log("its work")
+    console.log("listening port 3000")
 })

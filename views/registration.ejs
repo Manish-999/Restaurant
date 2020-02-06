@@ -1,0 +1,100 @@
+<%- include ("helper/header")%>
+
+    <body>
+        
+        
+
+        <!--navbar-->
+
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Restaurant</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+              <span class="navbar-toggler-icon"></span>
+            </button>
+          
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+              <ul class="navbar-nav mr-auto">
+                
+                <li class="nav-item active">
+                    <a class="nav-link" href="/">Home</a>
+                  </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/menu">Menu</a>
+                </li>
+                <li class="nav-item active">
+                  <a class="nav-link" href="/Login">Login</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link disabled" href="#">Registration</a>
+                  </li>
+                  <li class="nav-item active">
+                    <a class="nav-link" href="Feedback">Feedback</a>
+                  </li>
+              </ul>
+            </div>
+          </nav>
+
+
+        <div class="container pb-4 mt-5 shadow rounded" >
+            <form action="/registration" method="POST">
+
+                <div class="row">
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="fname">First Name </label>
+                            <input type="text" class="form-control" id="fname" name="fname">
+                        </div>
+                    </div>
+                    <div class="col">
+                        <div class="form-group">
+                            <label for="lname">Last Name </label>
+                            <input type="text" class="form-control" id="lname" name="lname">
+                        </div>
+                    </div>
+                </div>
+
+                    <div class="form-group">
+                        <label for="uname">User Name </label>
+                        <input type="text" class="form-control" id="uname" name="uname">
+                    </div>
+                    <div class="form-group">
+                        <label for="Password">Password </label>
+                        <input type="password" class="form-control" id="Password" name="password">
+                    </div>
+                    <div class="form-group">
+                        <label for="Rpassword">Password (Repeat)</label>
+                        <input type="password" class="form-control" id="Rpassword">
+                    </div>
+                
+                    <div class="row">
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="email">Email </label>
+                                <input type="text" class="form-control" id="email" name="email">
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-group">
+                                <label for="mobile">Mobile number</label>
+                                <input type="text" class="form-control" id="mobile" name="mobile">
+                            </div>
+                        </div>
+                    </div>
+                
+                <button type="submit" class="btn btn-primary">Submit</button>
+                <small id="emailHelp" class="form-text text-muted">We'll never share your details with anyone else.</small>
+                
+            
+            </form>
+        </div>    
+                
+          
+         
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        
+    </body>
+</html
