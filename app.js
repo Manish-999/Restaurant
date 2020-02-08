@@ -1,5 +1,6 @@
 const express =require("express")
 const bodyParser=require("body-parser")
+const db=require("./routes/dbConnection.js")
 
 
 const app=express()
@@ -9,6 +10,13 @@ app.use(express.static('./public'))
 app.set('view engine','ejs')
 
 
+db.connect((err)=>{
+    if(err){
+        console.log("error");
+    }
+    else
+    console.log("connected");
+})
 //index page
 app.get("/",(req,res)=>{  
     res.render("home.ejs");
