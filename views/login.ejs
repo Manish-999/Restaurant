@@ -1,63 +1,84 @@
 <%- include ("helper/header")%>
 
-    <body>
-        
-        
+	 <body>
 
-        <!--navbar-->
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Restaurant</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
-                  </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="/menu">Menu</a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Login</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="/Registration">Registration</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="Feedback">Feedback</a>
-                  </li>
-              </ul>
-            </div>
-          </nav>
 
-          <div class="container pb-4 mt-5 shadow rounded" >
-            <form action="/form" method="POST">
-               	<div class="text-center alert alert-primary">
-                  	<h1 class="alert-heading"> <em>Login</em></h1>
-               	</div>
-               	<div class="form-group">
-                  	<label for="UserName">User Name </label>
-                  	<input type="text" class="form-control" id="UserName">
-                  	</div>
-               	<div class="form-group">
-                  	<label for="Password">Password </label>
-                  	<input type="password" class="form-control" id="Password">
-               	</div>
-						 <button type="submit" class="btn btn-primary">Submit</button><small id="emailHelp" class="form-text text-muted">We'll never share your details with anyone else.</small>
-              </form>
-          </div>
+		  <!--navbar-->
 
-          
-    
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        
-    </body>
+		  <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+				<a class="navbar-brand" href="#">Restaurant</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+				  <span class="navbar-toggler-icon"></span>
+				</button>
+
+				<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				  <ul class="navbar-nav mr-auto">
+
+					 <li class="nav-item active">
+						  <a class="nav-link" href="/">Home</a>
+						</li>
+					 <li class="nav-item active">
+						<a class="nav-link" href="/menu">Menu</a>
+					 </li>
+					 <li class="nav-item">
+						<a class="nav-link disabled" href="#">Login</a>
+					 </li>
+					 <li class="nav-item active">
+						  <a class="nav-link" href="/Registration">Registration</a>
+						</li>
+						<li class="nav-item active">
+						  <a class="nav-link" href="Feedback">Feedback</a>
+						</li>
+				  </ul>
+				</div>
+			 </nav>
+
+			 
+			 	<!-----id inform1 and 2 are used to grab data ------->
+			 <div class="container pb-4 mt-5 shadow rounded" >
+				<form action="/kjh" onsubmit="return checkIt()" method="POST">
+						 <div class="text-center alert alert-primary">
+							 <h1 class="alert-heading"> <em>Login</em></h1>
+						 </div>
+						 <div class="form-group">
+							 <label for="UserName">User Name </label>
+							 <input type="text" class="form-control" id="UserName" placeholder="Enter User Name">
+							 <p id="informer1" class="form-text text-danger"></p>
+							 </div>
+						 <div class="form-group">
+							 <label for="Password">Password </label>
+							 <input type="password" class="form-control" id="Password" placeholder="Enter password">
+							 <p id="informer2" class="form-text text-danger"></p>
+						 </div>
+								 <button type="submit" class="btn btn-primary">Submit</button>
+								 <small id="emailHelp" class="form-text text-muted">We'll never share your details with anyone else.</small>
+				  </form>
+			 </div>
+
+
+
+		  <!-- Optional JavaScript -->
+		  <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+		  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+		  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+		  <script>
+				 function checkIt(){
+					 
+					 var name= $("#UserName").val()
+					 var pass= $("#Password").val()
+					 if(name.length==0){
+						 $('#informer1').text("Please enter user name");
+						 $('#informer2').text("");
+						 return false
+					 }
+					 if(pass.length==0){
+						 $('#informer1').text("");
+						$('#informer2').text("Please enter password");
+						 return false
+					 }
+				 }
+		  </script>
+	 </body>
 </html

@@ -34,9 +34,10 @@
             </div>
           </nav>
 
-
+            <!--------class m1 is used to grab data inputs
+                       class m2 is used to notify error------>
         <div class="container pb-4 mt-5 shadow rounded" >
-            <form action="/registration" method="POST">
+            <form action="/registration" onsubmit="return check()" method="POST">
                <div class="text-center alert alert-primary">
                	<h1 class="alert-heading"> <em>Registration</em></h1>
                </div>
@@ -45,41 +46,48 @@
                   <div class="col">
                      <div class="form-group">
                            <label for="fname">First Name </label>
-                           <input type="text" class="form-control" id="fname" name="fname">
+                           <input type="text" class="form-control m1" id="First Name" name="fname">
+                           <p id="fnameinfo" class="form-text text-danger m2"></p>
                      </div>
                   </div>
                   <div class="col">
                      <div class="form-group">
                         <label for="lname">Last Name </label>
-                        <input type="text" class="form-control" id="lname" name="lname">
+                        <input type="text" class="form-control m1" id="Last Name" name="lname">
+                        <p id="lnameinfo" class="form-text text-danger m2"></p>
                      </div>
                   </div>
                </div>
 
                <div class="form-group">
                   <label for="uname">User Name </label>
-                  <input type="text" class="form-control" id="uname" name="uname">
+                  <input type="text" class="form-control m1" id="User Name" name="uname">
+                  <p id="unameinfo" class="form-text text-danger m2"></p>
                </div>
                <div class="form-group">
                   <label for="Password">Password </label>
-                  <input type="password" class="form-control" id="Password" name="password">
+                  <input type="password" class="form-control m1" id="Password" name="password">
+                  <p id="passinfo1" class="form-text text-danger m2"></p>
                </div>
                <div class="form-group">
                   <label for="Rpassword">Password (Repeat)</label>
-                  <input type="password" class="form-control" id="Rpassword">
+                  <input type="password" class="form-control m1" id="password">
+                  <p id="passinfo2" class="form-text text-danger m2"></p>
                </div>
                 
                <div class="row">
                   <div class="col">
                      <div class="form-group">
                            <label for="email">Email </label>
-                           <input type="text" class="form-control" id="email" name="email">
+                           <input type="text" class="form-control m1" id="Email" name="email">
+                           <p id="emailinfo" class="form-text text-danger m2"></p>
                      </div>
                   </div>
                   <div class="col">
                      <div class="form-group">
                         <label for="mobile">Mobile number</label>
-                        <input type="text" class="form-control" id="mobile" name="mobile">
+                        <input type="number" class="form-control m1" id="Mobile Number" name="mobile">
+                        <p id="mobileinfo" class="form-text text-danger m2"></p>
                      </div>
                	</div>
             	</div>
@@ -96,6 +104,35 @@
         <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
         <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        
+        <script>
+         function check(){
+               for(var i=0;i<$(".m1").length;i++){
+                  
+                  if($(".m1")[i].value==0){
+                     $(".m2")[i].innerHTML=("Enter "+$(".m1")[i].id);
+                     for(var j=0;j<i;j++){
+                        $(".m2")[j].innerHTML=("");
+                     }
+                     return false
+                  }
+               }
+               var pass1=$("#Password").val();
+               var pass2=$("#password").val();
+               if(pass1 != pass2){
+                  $(".m2")[4].innerHTML=("Check your Password");
+                  $(".m2")[3].innerHTML=("Check your Password");
+                  return false
+               }  
+               var num=$(".m1")[6].value;
+               if(num.length!=10){
+                  $(".m2")[4].innerHTML=("");
+                  $(".m2")[3].innerHTML=("");
+                  $(".m2")[6].innerHTML=("Check your number");
+                  return false
+               }
+               $(".m2")[6].innerHTML=("");
+               return true
+         }
+        </script>
     </body>
 </html

@@ -1,4 +1,5 @@
 const express =require("express")
+const mysql=require("mysql")
 const bodyParser=require("body-parser")
 const db=require("./routes/dbConnection.js")
 
@@ -10,37 +11,42 @@ app.use(express.static('./public'))
 app.set('view engine','ejs')
 
 
-db.connect((err)=>{
-    if(err){
-        console.log("error");
-    }
-    else
-    console.log("connected");
-})
-//index page
+//////////////  INDEX PAGE  /////////////////////
+
 app.get("/",(req,res)=>{  
+    db.query("select * from data",(error,res,field)=>{
+        if(error){
+            console.log('some error',error)
+        }
+        else{
+            console.log("let me test it",res)
+        }
+    })
     res.render("home.ejs");
+    
 })
 
 
+////////////////  LOGIN PAGE  //////////////////////////////
 
 app.get("/login",(req,res)=>{
     res.render("login");
 })
+
 
 app.post("/login",(req,res)=>{
 
 })
 
 
-
-
+/////////////////////  REGISTRATION PAGE  ///////////////////////////////
 
 app.route("/registration").all((req,res,next)=>{
     next()
 })
 .get((req,res)=>{
     res.render("registration");
+   
 })
 .post((req,res)=>{
     console.log(req.body.fname);
@@ -53,9 +59,20 @@ app.route("/registration").all((req,res,next)=>{
 })
 
 
+
+//////////////////////////  MENU PAGE  ////////////////////////////
+
 app.get("/menu",(req,res)=>{
     res.render("Menu")
 })
+
+
+////////////////// ERROR HANDLER FOR MYSQL////////////////////////////////////
+db.on('error', function(err) {
+    console.log("Fatal error ",err.code);
+});
+
+
 app.listen(3000,()=>{
     console.log("listening port 3000")
 })
