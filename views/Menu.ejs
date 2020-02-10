@@ -1,48 +1,143 @@
 <%- include ("helper/header")%>
 
-    <body>
-        
-        
+		<body>
+				
+			<!--navbar-->
 
-        <!--navbar-->
+				<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+						<a class="navbar-brand" href="#">Restaurant</a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
+					
+						<div class="collapse navbar-collapse" id="navbarSupportedContent">
+							<ul class="navbar-nav mr-auto">
+								
+								<li class="nav-item active">
+										<a class="nav-link" href="/">Home</a>
+									</li>
+								<li class="nav-item">
+									<a class="nav-link disabled" href="#">Menu</a>
+								</li>
+								<li class="nav-item active">
+									<a class="nav-link" href="Login">Login</a>
+								</li>
+								<li class="nav-item active">
+										<a class="nav-link" href="Registration">Registration</a>
+									</li>
+									<li class="nav-item active">
+										<a class="nav-link" href="#">Feedback</a>
+									</li>
+							</ul>
+						</div>
+					</nav>
 
-        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Restaurant</a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-              <span class="navbar-toggler-icon"></span>
-            </button>
-          
-            <div class="collapse navbar-collapse" id="navbarSupportedContent">
-              <ul class="navbar-nav mr-auto">
-                
-                <li class="nav-item active">
-                    <a class="nav-link" href="/">Home</a>
-                  </li>
-                <li class="nav-item">
-                  <a class="nav-link disabled" href="#">Menu</a>
-                </li>
-                <li class="nav-item active">
-                  <a class="nav-link" href="Login">Login</a>
-                </li>
-                <li class="nav-item active">
-                    <a class="nav-link" href="Registration">Registration</a>
-                  </li>
-                  <li class="nav-item active">
-                    <a class="nav-link" href="Feedback">Feedback</a>
-                  </li>
-              </ul>
-            </div>
-          </nav>
+					<div class="container mt-3">
+							<nav class="">
+								<div class="nav nav-pills justify-content-start" id="navBar" role="tablist">
+									<a class="nav-item nav-link active mr-3" id="nav-food" data-toggle="pill" href="#nav-food-item" role="tab" area-control="nav-food-item" aria-selected="true">Food</a>
+									<a class="nav-item nav-link mr-3 " id="nav-fastFood" data-toggle="pill" href="#nav-fastFood-item" role="tab" area-control="nav-fastFood-item" aria-selected="false">Fast Foods</a>
+									<a class="nav-item nav-link" id="nav-sweets" data-toggle="pill" href="#nav-sweets-item" role="tab" area-control="nav-sweets-item" aria-selected="False">Sweets</a>
+								</div>
+							</nav>
+							<div class="tab-content mt-3" id="nabTab">
+								<div class="tab-pane fade show active" id="nav-food-item" role="tabpanel" aria-labelledby="nav-food">
 
+									<table class="table table-hover">
+										<thead>
+										  <tr class="bg-dark text-white">
+											 <th scope="col">#</th>
+											 <th scope="col">Item</th>
+											 <th scope="col">Cost</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											 <th scope="row">1</th>
+											 <td>ls</td>
+											 <td>Otto</td>
+										  </tr>
+										  <tr>
+											 <th scope="row">2</th>
+											 <td>Jacob</td>
+											 <td>Thornton</td>
+										  </tr>
+										  <tr>
+											 <th scope="row">3</th>
+											 <td>Larry</td>
+											 <td>the Bird</td>
+										  </tr>
+										</tbody>
+									 </table>
 
+								</div>
+								<div class="tab-pane fade" id="nav-fastFood-item" role="tabpanel" aria-labelledby="nav-fastFood">
 
+									<table class="table table-hover">
+										<thead>
+										  <tr class="bg-dark text-white">
+											 <th scope="col">#</th>
+											 <th scope="col">Item</th>
+											 <th scope="col">Cost</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											 <th scope="row">1</th>
+											 <td>Mark</td>
+											 <td>Otto</td>
+										  </tr>
+										  <tr>
+											 <th scope="row">2</th>
+											 <td>Jacob</td>
+											 <td>Thornton</td>
+										  </tr>
+										  <tr>
+											 <th scope="row">3</th>
+											 <td>Larry</td>
+											 <td>the Bird</td>
+										  </tr>
+										</tbody>
+									 </table>
 
-    
-        <!-- Optional JavaScript -->
-        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
-        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-        
-    </body>
+								</div>
+								<div class="tab-pane fade" id="nav-sweets-item" role="tabpanel" aria-labelledby="nav-sweets">
+
+									<table class="table table-hover">
+										<thead>
+										  <tr class="bg-dark text-white">
+											 <th scope="col">#</th>
+											 <th scope="col">Item</th>
+											 <th scope="col">Cost</th>
+										  </tr>
+										</thead>
+										<tbody>
+										  <tr>
+											 <th scope="row">1</th>
+											 <td>Mark</td>
+											 <td>Otto</td>
+										  </tr>
+										  <tr>
+											 <th scope="row">2</th>
+											 <td>Jacob</td>
+											 <td>Thornton</td>
+										  </tr>
+										  <tr>
+											 <th scope="row">3</th>
+											 <td>Larry</td>
+											 <td>the Bird</td>
+										  </tr>
+										</tbody>
+									 </table>
+
+								</div>
+							</div>
+					</div>
+				<!-- Optional JavaScript -->
+				<!-- jQuery first, then Popper.js, then Bootstrap JS -->
+				<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+				<script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+				<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+				
+		</body>
 </html
