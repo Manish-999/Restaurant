@@ -14,14 +14,7 @@ app.set('view engine','ejs')
 //////////////  INDEX PAGE  /////////////////////
 
 app.get("/",(req,res)=>{  
-    db.query("select * from data",(error,res,field)=>{
-        if(error){
-            console.log('some error',error)
-        }
-        else{
-            console.log("let me test it",res)
-        }
-    })
+   
     res.render("home.ejs");
     
 })
