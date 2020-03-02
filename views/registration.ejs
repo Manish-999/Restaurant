@@ -39,6 +39,9 @@
                <div class="text-center alert alert-primary">
                	<h1 class="alert-heading"> <em>Registration</em></h1>
                </div>
+               <% if (data){%>
+               <p class="form-text text-danger text-center">Please enter data carefully. And use gmail id in place of email id</p>
+               <% } %>
                 
                <div class="row">
                   <div class="col">
@@ -109,10 +112,17 @@
                   if($(".m1")[i].value==0){
                      $(".m2")[i].innerHTML=("Enter "+$(".m1")[i].id);
                      for(var j=0;j<i;j++){
-                        $(".m2")[j].innerHTML=("");
+                        if($(".m1")[i].value!=0){
+                           $(".m2")[j].innerHTML=("");
+                        }
                      }
                      return false
                   }
+                  for(var j=0;j<$(".m1").length;j++){
+                        if($(".m1")[i].value!=0){
+                           $(".m2")[j].innerHTML=("");
+                        }
+                     }
                }
                var pass1=$("#Password").val();
                var pass2=$("#password").val();
