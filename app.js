@@ -1,91 +1,106 @@
 const express =require("express")
-const mysql=require("mysql")
 const session=require("express-session")
-var MySQLStore = require('express-mysql-session')(session);
+var mongoose =require("mongoose");
 var passport = require('passport')
 , LocalStrategy = require('passport-local').Strategy;
 const bodyParser=require("body-parser")
 const db=require("./routes/dbConnection.js")
+const user=require("./models/user.js")
 const checkRes=require("./routes/checkRegistration.js")
+var passportss=require("./passport/passport.js")
+var cookieParser = require('cookie-parser')
+const MongoStore = require('connect-mongo')(session);
 
 
 const app=express()
+app.use(cookieParser())
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('./public'))
 app.set('view engine','ejs')
 
-
-
-var sessionStore = new MySQLStore(db);
-
-
 app.use(session({
-    secret: "don't mess with it",
-    store: sessionStore,
-    resave: false,
-    saveUninitialized: false,
-  cookie: { secure: true }
-}));
+    secret: 'keep it secret',
+    store: new MongoStore({ mongooseConnection: mongoose.connection }),
+    resave: true,
+    saveUninitialized: true,
+    cookie:{
+        maxAge: 60*1000*60*24*30,
+        httpOnly: true
+    }
+  }))
+
+
+
 app.use(passport.initialize());
 app.use(passport.session());
+
+
+
 
 
 //////////////  INDEX PAGE  /////////////////////
 
 app.get("/",(req,res)=>{  
    
-    res.render("home.ejs");
-    db.query("SELECT * FROM data",(err,res,field)=>{
-        if(err){
-            console.log(err);
-        }
-        else{
-            console.log("connected",res);
-        }
-    })
+    res.render("home.ejs",{data:false});
+    
     
 })
 
 
 ////////////////  LOGIN PAGE  //////////////////////////////
-
-app.get("/login",(req,res)=>{
+app.route("/login",(req,res,next)=>{
+    next()
+})
+.get((req,res)=>{
     res.render("login");
 })
-
-
-app.post("/login",(req,res)=>{
-
-})
+.post(passport.authenticate("login",{
+    successRedirect:"/checker",
+    failureRedirect:"/login"
+}))
 
 
 /////////////////////  REGISTRATION PAGE  ///////////////////////////////
 
 app.route("/registration").all((req,res,next)=>{
+    console.log(req.user)
     next()
 })
 .get((req,res)=>{
-    res.render("registration",{data : false});
+    res.render("registration",{data : false,data1:false});
    
 })
 .post((req,res)=>{
     var result=checkRes(req.body);
+    var data=req.body;
     if(result==false){
         console.log("false");
-        res.render("registration",{data : true});
+        res.render("registration",{data : true,data1:false});
     }
     else{
-        db.query("insert into data (fname,lname,uname,pass,email,mobile,auth) values (?,?,?,?,?,?,'client')",[req.body.fname , req.body.lname , req.body.uname , req.body.password , req.body.email , req.body.mobile],(err,result,field)=>{
-            if(!err){
-                db.query('SELECT LAST_INSERT_id()',(errs,results,fields)=>{
-                    if(!err){
-                        console.log(results[0])
-                    }
-                })
+        var newUser=new user();
+        newUser.name.fname=req.body.fname;
+        newUser.name.lname=req.body.lname;
+        newUser.uname=req.body.uname;
+        newUser.password=req.body.password;
+        newUser.email=req.body.email;
+        newUser.mobile=req.body.mobile;
+        newUser.save((err)=>{
+            if(err){
+                console.log("some error",err)
+                if(err.keyPattern.uname)
+                    res.render("registration",{data:false,data1:"User name"});
+                if(err.keyPattern.email)
+                        res.render("registration",{data:false,data1:"Email"});
+                if(err.keyPattern.mobile)
+                            res.render("registration",{data:false,data1:"Mobile Number"});
+                
             }
-            else {
-                console.log(err)
+            else{
+                console.log("now your data is saved..contect to resturant for activate your account")
+                res.render("home",{data:true});
             }
         })
     }
@@ -100,10 +115,19 @@ app.get("/menu",(req,res)=>{
 })
 
 
-////////////////// ERROR HANDLER FOR MYSQL////////////////////////////////////
-db.on('error', function(err) {
-    console.log("Fatal error ",err.code);
-});
+
+
+//////////////////////////  checker  ////////////////////////////
+
+app.get("/checker",(req,res)=>{
+    if(req.user.who=="client"){
+        res.render("client/profile")
+    }
+    if(req.user.who=="admin"){
+        res.render("admin/index")
+    }
+})
+
 
 
 app.listen(3000,()=>{
