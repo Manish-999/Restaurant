@@ -106,6 +106,7 @@ app.route("/registration").all((req,res,next)=>{
         newUser.password=req.body.password;
         newUser.email=req.body.email;
         newUser.mobile=req.body.mobile;
+        newUser.isActive=true;
         newUser.save((err)=>{
             if(err){
                 console.log("some error",err)
@@ -119,7 +120,7 @@ app.route("/registration").all((req,res,next)=>{
             }
             else{
                 console.log("now your data is saved..contect to resturant for activate your account")
-                res.render("home",{data:true,member:false});
+                res.render("home",{data:true,member:true});
             }
         })
     }
