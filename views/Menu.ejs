@@ -18,13 +18,20 @@
 									</li>
 								<li class="nav-item">
 									<a class="nav-link disabled" href="#">Menu</a>
-								</li>
-								<li class="nav-item active">
-									<a class="nav-link" href="Login">Login</a>
-								</li>
-								<li class="nav-item active">
-										<a class="nav-link" href="Registration">Registration</a>
+								</li><%if(member) { %>
+									<li class="nav-item active">
+										 <a class="nav-link" href="Login">Login</a>
 									</li>
+									<li class="nav-item active">
+											  <a class="nav-link" href="Registration">Registration</a>
+									</li><%}else{%>
+										<li class="nav-item active">
+											<a class="nav-link" href="/checker">Account</a>
+									  </li>
+										 <li class="nav-item active">
+											  <a class="nav-link" href="/logout">Logout</a>
+										 </li>
+										 <%}%>
 									<li class="nav-item active">
 										<a class="nav-link" href="# ">Feedback</a>
 									</li>

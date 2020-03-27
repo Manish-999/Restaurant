@@ -1,0 +1,121 @@
+<%- include ("../helper/header")%>
+</head>
+    <body>
+        
+      <!----------NAVBAR----------->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+      <a class="navbar-brand" href="#">Restaurant</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarS" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+
+      <div class="collapse navbar-collapse" id="navbarS">
+        <ul class="navbar-nav mr-auto">
+
+          <li class="nav-item active">
+              <a class="nav-link" href="/">Home</a>
+            </li>
+          <li class="nav-item active">
+            <a class="nav-link" href="/menu">Menu</a>
+          </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="/checker">Account</a>
+            </li>
+          <li class="nav-item active">
+              <a class="nav-link" href="/logout">Logout</a>
+            </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="#">Feedback</a>
+            </li>
+        </ul>
+      </div>
+    </nav>
+
+            <!--------class m1 is used to grab data from inputs
+                       class m2 is used to notify error------>
+        <div class="container pb-4 mt-5 shadow rounded" >
+            <form action="/admin/register" onsubmit="return check()" method="POST" enctype="multipart/form-data">
+               <div class="text-center alert alert-primary">
+               	<h1 class="alert-heading"> <em>Registration</em></h1>
+               </div>
+               <p class="form-text text-danger text-center"><%=msg%></p>
+              
+               
+                  <div class="col">
+                     <div class="form-group">
+                           <label for="name">Name </label>
+                           <input type="text" class="form-control m1" id="Name" name="name">
+                           <p id="nameinfo" class="form-text text-danger m2"></p>
+                     </div>
+                  </div>
+               
+                
+               
+                  <div class="col">
+                     <div class="form-group">
+                           <label for="specialist">specialist </label>
+                           <input type="text" class="form-control m1" id="specialist" name="specialist">
+                           <p id="emailinfo" class="form-text text-danger m2"></p>
+                     </div>
+                  </div>
+                  <div class="col">
+                     <div class="form-group">
+                        <label for="mobile">Mobile number</label>
+                        <input type="number" class="form-control m1" id="Mobile Number" name="mobile">
+                        <p id="mobileinfo" class="form-text text-danger m2"></p>
+                     </div>
+                  </div>
+               
+                  <div class="col">
+                     <div class="form-group">
+                        <label for="image">Choose Image</label>
+                        <input type="file" class="form-control m1" id="image" name="image">
+                        <p id="imageinfo" class="form-text text-danger m2"></p>
+                     </div>
+               	</div>
+            	
+                
+               <button type="submit" class="btn btn-primary">Submit</button>
+               <small id="emailHelp" class="form-text text-muted">We'll never share your details with anyone else.</small>
+            </form>
+        </div>    
+                
+          
+         
+        <!-- Optional JavaScript -->
+        <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+        <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+        <script>
+         function check(){
+               for(var i=0;i<$(".m1").length;i++){
+                  
+                  if($(".m1")[i].value==0){
+                     $(".m2")[i].innerHTML=("Enter "+$(".m1")[i].id);
+                     for(var j=0;j<i;j++){
+                        if($(".m1")[j].value!=0){
+                           $(".m2")[j].innerHTML=("");
+                        }
+                     }
+                     return false
+                  }
+                  for(var j=0;j<$(".m1").length;j++){
+                        if($(".m1")[j].value!=0){
+                           $(".m2")[j].innerHTML=("");
+                        }
+                     }
+               }
+
+               var num=$(".m1")[2].value;
+               if(num.length!=10){
+                  $(".m2")[2].innerHTML=("Check your number");
+                  return false
+               }
+               
+               $(".m2")[6].innerHTML=("");
+               return true
+         }
+        </script>
+    </body>
+</html

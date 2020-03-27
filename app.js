@@ -6,14 +6,17 @@ var passport = require('passport')
 const bodyParser=require("body-parser")
 const db=require("./routes/dbConnection.js")
 const user=require("./models/user.js")
+const emp=require("./models/employee.js")
 const checkRes=require("./routes/checkRegistration.js")
+const checkAC=require("./routes/checkAdminClient.js")
 var passportss=require("./passport/passport.js")
 var cookieParser = require('cookie-parser')
 const MongoStore = require('connect-mongo')(session);
+var admin=require("./admin.js")
 
 
 const app=express()
-app.use(cookieParser())
+app.use(cookieParser("keep it secret"))
 app.use(bodyParser.urlencoded({ extended: true}))
 app.use(bodyParser.json())
 app.use(express.static('./public'))
@@ -25,8 +28,8 @@ app.use(session({
     resave: true,
     saveUninitialized: true,
     cookie:{
-        maxAge: 60*1000*60*24*30,
-        httpOnly: true
+        maxAge:1000*60*60*24*30,
+        secret:"keep it secret"
     }
   }))
 
@@ -43,7 +46,14 @@ app.use(passport.session());
 
 app.get("/",(req,res)=>{  
    
-    res.render("home.ejs",{data:false});
+    if(req.user){
+        
+    res.render("home.ejs",{data:false,member:false});
+    }
+    else{
+        
+    res.render("home.ejs",{data:false,member:true});
+    }
     
     
 })
@@ -62,10 +72,19 @@ app.route("/login",(req,res,next)=>{
 }))
 
 
+//////////////  logout PAGE  /////////////////////
+
+app.get("/logout",(req,res)=>{  
+   
+    req.logout();
+    res.render("home.ejs",{data:false,member:true})
+    
+    
+})
+
 /////////////////////  REGISTRATION PAGE  ///////////////////////////////
 
 app.route("/registration").all((req,res,next)=>{
-    console.log(req.user)
     next()
 })
 .get((req,res)=>{
@@ -100,7 +119,7 @@ app.route("/registration").all((req,res,next)=>{
             }
             else{
                 console.log("now your data is saved..contect to resturant for activate your account")
-                res.render("home",{data:true});
+                res.render("home",{data:true,member:false});
             }
         })
     }
@@ -111,7 +130,13 @@ app.route("/registration").all((req,res,next)=>{
 //////////////////////////  MENU PAGE  ////////////////////////////
 
 app.get("/menu",(req,res)=>{
-    res.render("Menu")
+
+    if(req.user){
+        res.render("Menu.ejs",{member:false});
+    }
+    else{
+        res.render("Menu.ejs",{member:true});
+    }
 })
 
 
@@ -119,14 +144,25 @@ app.get("/menu",(req,res)=>{
 
 //////////////////////////  checker  ////////////////////////////
 
-app.get("/checker",(req,res)=>{
-    if(req.user.who=="client"){
-        res.render("client/profile")
+app.get("/checker",checkAC.admin,(req,res)=>{
+    if(req.user){
+        if(req.user.who=="client"){
+            res.render("client/profile")
+        }
+        if(req.user.who=="admin"){
+            emp.find({},(err,file)=>{
+                
+            res.render("admin/index",{data:file})
+            })
+        }
     }
-    if(req.user.who=="admin"){
-        res.render("admin/index")
+    else{
+        res.render("home.ejs",{data:false,member:true})
     }
 })
+
+
+app.use("/admin",admin)
 
 
 
