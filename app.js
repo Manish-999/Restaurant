@@ -1,11 +1,12 @@
 const express =require("express")
+const bodyParser=require("body-parser")
 const session=require("express-session")
 var mongoose =require("mongoose");
 var passport = require('passport')
 , LocalStrategy = require('passport-local').Strategy;
-const bodyParser=require("body-parser")
 const db=require("./routes/dbConnection.js")
 const user=require("./models/user.js")
+const food=require("./models/food.js")
 const emp=require("./models/employee.js")
 const checkRes=require("./routes/checkRegistration.js")
 const checkAC=require("./routes/checkAdminClient.js")
@@ -13,6 +14,9 @@ var passportss=require("./passport/passport.js")
 var cookieParser = require('cookie-parser')
 const MongoStore = require('connect-mongo')(session);
 var admin=require("./admin.js")
+var client=require("./client.js")
+var fs=require("fs")
+var multer=require("multer")
 
 
 const app=express()
@@ -39,6 +43,30 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 
+var storage = multer.diskStorage({
+    destination: function (req, file, cb) {
+      cb(null, './public/food')
+    },
+    filename: function (req, file, cb) {
+      cb(null, file.fieldname + '-' + Date.now()+"-"+file.originalname)
+    }
+  })
+   
+  var upload = multer({ storage: storage,
+                         limits:{
+                            fileSize:1024*500
+                         } ,
+                         fileFilter:(req,file,cb)=>{
+                            if(file.mimetype=="image/png" || file.mimetype=="image/jpeg" || file.mimetype=="image/jpg"){
+                                 
+                               cb(null,true)
+                            }
+                            else{
+                               cb("use only png, jpeg, jpg formate",false)
+                            }
+                         }
+                      }).single("image")
+ 
 
 
 
@@ -48,11 +76,11 @@ app.get("/",(req,res)=>{
    
     if(req.user){
         
-    res.render("home.ejs",{data:false,member:false});
+    res.render("home.ejs",{member:false});
     }
     else{
         
-    res.render("home.ejs",{data:false,member:true});
+    res.render("home.ejs",{member:true});
     }
     
     
@@ -63,7 +91,7 @@ app.get("/",(req,res)=>{
 app.route("/login",(req,res,next)=>{
     next()
 })
-.get((req,res)=>{
+.get(checkAC.LRcheck,(req,res,next)=>{
     res.render("login");
 })
 .post(passport.authenticate("login",{
@@ -77,7 +105,7 @@ app.route("/login",(req,res,next)=>{
 app.get("/logout",(req,res)=>{  
    
     req.logout();
-    res.render("home.ejs",{data:false,member:true})
+    res.render("home.ejs",{member:true})
     
     
 })
@@ -87,7 +115,7 @@ app.get("/logout",(req,res)=>{
 app.route("/registration").all((req,res,next)=>{
     next()
 })
-.get((req,res)=>{
+.get(checkAC.LRcheck,(req,res,next)=>{
     res.render("registration",{data : false,data1:false});
    
 })
@@ -106,7 +134,6 @@ app.route("/registration").all((req,res,next)=>{
         newUser.password=req.body.password;
         newUser.email=req.body.email;
         newUser.mobile=req.body.mobile;
-        newUser.isActive=true;
         newUser.save((err)=>{
             if(err){
                 console.log("some error",err)
@@ -119,8 +146,22 @@ app.route("/registration").all((req,res,next)=>{
                 
             }
             else{
-                console.log("now your data is saved..contect to resturant for activate your account")
-                res.render("home",{data:true,member:true});
+                user.findOne({uname:req.body.uname},(err,file)=>{
+                    if(err){
+                        console.log("err1")
+                        res.redirect("/")
+                    }else{
+                            req.login(file,(err)=>{
+                                    if(err){
+                                        console.log("err2")
+                                        res.redirect("/")
+                                    }else{
+                                            res.redirect("/checker")
+                                    }
+                            })
+                    }
+                    
+                })
             }
         })
     }
@@ -131,24 +172,99 @@ app.route("/registration").all((req,res,next)=>{
 //////////////////////////  MENU PAGE  ////////////////////////////
 
 app.get("/menu",(req,res)=>{
+    food.find({},(err,data)=>{
+        if(err){
+            res.redirect("/")
+        }else{
+            if(req.user){
+                if(req.user.who=="admin"){
+    
+                    res.render("Menu.ejs",{member:false,allow:true,file:data});
+    
+                }else{
+                    res.render("Menu.ejs",{member:false,allow:false,file:data})
+                }
+            }
+            else{
+                res.render("Menu.ejs",{member:true,allow:false,file:data});
+            }
+        }
+    })
 
-    if(req.user){
-        res.render("Menu.ejs",{member:false});
-    }
-    else{
-        res.render("Menu.ejs",{member:true});
-    }
+    
 })
 
 
 
+app.route("/menu/add",(req,res,next)=>{
+    next()
+})
+.get(checkAC.admin,(req,res)=>{
+    res.render("menuAdd.ejs",{msg:""});
+})
+app.post("/menu/add",(req,res)=>{
+    upload(req,res,(err)=>{
+        if(err){
+           if(err.message)
+                 res.render("menuAdd",{msg:"Image size too Large Keep it under 500 KB"})
+           else{
+              res.render("menuAdd",{msg:err})
+           }
+        }
+        else{
+            var newUser=new food();
+            newUser.title=req.body.name;
+            newUser.food=req.body.item;
+            newUser.image=req.file.filename;
+            newUser.cost=req.body.cost;
+            newUser.save((err)=>{
+               if(err){
+                  res.render("menuAdd",{msg:"Some technical problem please contact to developer"})
+               }
+               else{
+                  res.redirect("/menu")
+               }
+            })
+      
+        }
+     })
+})
 
+
+
+app.get("/menu/delete/:id/:id2",(req,res)=>{
+    var name=req.params.id;
+    var imageName=req.params.id2
+        food.deleteOne({title:name },(err)=>{
+           if(err){
+              res.redirect("/")
+           }
+           else{
+              fs.unlink("./public/food/"+imageName,(err)=>{
+                 if(err){
+                    res.redirect("/")
+                 }
+                 else{
+                    res.redirect("/menu")
+                 }
+              })
+           }
+        })
+})
 //////////////////////////  checker  ////////////////////////////
 
-app.get("/checker",checkAC.admin,(req,res)=>{
+app.get("/checker",(req,res)=>{
     if(req.user){
         if(req.user.who=="client"){
-            res.render("client/profile")
+            user.findOne({uname:req.user.uname},(err,file)=>{
+
+                if(req.user.isActive){
+                    res.render("client/profile",{msg:["",file]})
+                }else{
+                    res.render("client/profile",{msg:["Your account is not activate. Please contect to Pandey Restaurant for activate your account",file]})
+                }
+            })
+            
         }
         if(req.user.who=="admin"){
             emp.find({},(err,file)=>{
@@ -158,13 +274,24 @@ app.get("/checker",checkAC.admin,(req,res)=>{
         }
     }
     else{
-        res.render("home.ejs",{data:false,member:true})
+        res.render("home.ejs",{member:true})
     }
 })
 
 
-app.use("/admin",admin)
+////////////////////////////  SUMMERY OF USER  //////////////////////////////
+app.get("/summery/:id",checkAC.allowSummery,(req,res)=>{
+    
+    var info=fs.readFileSync("./file/"+req.params.id+".txt","utf-8")
+    var file=info.split("$")
+    file.pop()
+    res.render("summery.ejs",{data:file,who:req.user.who,name:req.params.id})
+    
+ })
 
+
+app.use("/admin",admin)
+app.use("/client",client)
 
 
 app.listen(3000,()=>{

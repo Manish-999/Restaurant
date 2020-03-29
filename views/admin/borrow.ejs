@@ -33,35 +33,35 @@
         <a class="nav-link" href="/checker">Employees</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link " href="/admin/activeUser">Active Clients</a>
+        <a class="nav-link" href="/admin/activeUser">Active Clients</a>
       </li>
       <li class="nav-item">
-        <a class="nav-link active" href="#">Blocked Clients</a>
+        <a class="nav-link" href="/admin/blockedUser">Blocked Clients</a>
       </li>
       <li class="nav-item">
-         <a class="nav-link" href="/admin/summery">User Summery</a>
+         <a class="nav-link " href="/admin/summery">User Summery</a>
        </li>
+      <li class="nav-item">
+        <a class="nav-link active" href="/admin/borrow">Borrow</a>
+      </li>
     </ul>
    
-   
+   <div class="container">
 
+        <div class="container">
+          <div class="alert alert-success mt-4">
+            <p> <strong>Name : </strong><%=data[0].name.fname%> <%=data[0].name.lname%></p>
+                  <p> <strong>User Name : </strong><%=data[0].uname%></p>
+                  <p> <strong>Email : </strong><%=data[0].email%></p>
+          </div>
 
-
-<div class="row">	
-   <%for(i=0;i<data.length;i++){%>
-   <div class="col mt-4 ml-4">	
-      <div class="card alert alert-danger" style="width: 18rem;">
-         <div class="card-body">
-            <h5 class="card-title">Name : <%=data[i].uname%></h5>
-            <p class="card-text"><strong>Email : </strong><%=data[i].email%></p>
-            <p class="card-text"><strong>Number :</strong> <%=data[i].mobile%></p>
-            <a href="/admin/userUnBlock/<%=data[i].uname%>" class="btn btn-primary ">Unblock</a>
-            </div>
+          
       </div>
    </div>
-   <%}%>
-   
-</div>
+
+
+
+
 
 
 

@@ -1,0 +1,119 @@
+<%- include ("./helper/header")%>
+<body>
+
+   <!----------NAVBAR----------->
+     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="#">Restaurant</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarS" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarS">
+          <ul class="navbar-nav mr-auto">
+
+            <li class="nav-item active">
+                <a class="nav-link" href="/">Home</a>
+              </li>
+            <li class="nav-item active">
+              <a class="nav-link" href="/menu">Menu</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link" href="/logout">Logout</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="#">Feedback</a>
+              </li>
+          </ul>
+        </div>
+      </nav>
+
+<%if(who=="admin"){%>
+   <div class="container mt-5">
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+           <a class="nav-link" href="/checker">Employees</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="/admin/activeUser">Active Clients</a>
+         </li>
+         <li class="nav-item">
+           <a class="nav-link" href="/admin/blockedUser">Blocked Clients</a>
+         </li>
+         <li class="nav-item">
+            <a class="nav-link" href="/admin/summery">User Summery</a>
+          </li>
+          <li class="nav-item">
+             <a class="nav-link active" href="#"><%=name%></a>
+           </li>
+       </ul>
+<%}if(who=="client"){%>
+
+   <div class="container mt-5">
+      <ul class="nav nav-tabs">
+         <li class="nav-item">
+           <a class="nav-link" href="/checker">Profile</a>
+         </li>
+       
+       <li class="nav-item">
+         <a class="nav-link active" href="#"><%=name%></a>
+       </li>
+     </ul>
+
+<%}%>
+      <%if(who=="admin"){%>
+
+      <%}%>
+
+
+      <div class="alert alert-success mt-4">
+      <% sum=0,file;
+      for(j=0;j<data.length;j++){
+         file=JSON.parse(data[j])
+         if(!file.complete){
+            sum=file.borrow + sum;
+         }
+      }%>
+         <p><strong>You have to pay : </strong> <%=sum%></p>
+         <%if(who=="admin"){%>
+               <p>Press red button after completing borrows </p>
+            <%}%>
+       </div>
+     <div class="container mt-3">
+      <table class="table">
+         <thead>
+           <tr>
+             <th scope="col">Date</th>
+             <th scope="col">Borrow</th>
+             <th scope="col">Pay/Not</th>
+           </tr>
+         </thead>
+         <tbody>
+            <%for(i=data.length-1;i>=0;i--){%>
+                        <%var file=JSON.parse(data[i])%>
+                  <tr>
+                     <td><%=file.date.substring(0,10)%></td>
+                     <td><%=file.borrow%></td>
+                     <%if(who=="admin"){%>
+                     <td><%if(file.complete){%>
+                        <a href="#" class="btn btn-primary disabled ">Payed </a></td>
+                        <%}else{%>
+                           <a href="/admin/paid/<%=name%>/<%=file.date%>" class="btn btn-danger">Not Payed </a></td>
+                           <%}%>
+                        
+                        
+                     <%}%>
+                     <%if(who=="client"){%>
+                              <%if(file.complete){%>
+                                    <td><a href="#" class="btn btn-primary disabled">Payed</a></td>
+                              <%}else{%>
+                                    <td><a href="#" class="btn btn-danger disabled">Not Payed</a></td>
+                        <%}}%>
+                  </tr>
+           <%}%>
+         </tbody>
+       </table>
+     </div>
+
+   </div>
+</body>
+</html>

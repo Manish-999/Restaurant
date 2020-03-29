@@ -48,23 +48,32 @@
 									<a class="nav-item nav-link" id="nav-sweets" data-toggle="pill" href="#nav-sweets-item" role="tab" area-control="nav-sweets-item" aria-selected="False">Sweets</a>
 								</div>
 							</nav>
+							<%if(allow){%>
+								<div class="text-center mt-3">
+									<a href="/menu/add" class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Add New Menu</a>
+								</div>
+							<%}%>
 							<div class="tab-content mt-3" id="nabTab">
 								<div class="tab-pane fade show active" id="nav-food-item" role="tabpanel" aria-labelledby="nav-food">
 										<div class="card-deck">	
 											<div class="row">	
 
+												<%for(var i=0;i<file.length;i++){
+													if(file[i].food=="food"){%>
 
-
-												<div class="col mt-4 ml-4">	
-													<div class="card" style="width: 18rem;">
-														<img src="/food3.jpg" class="card-img-top" alt="..." style="height: 15rem;">
-														<div class="card-body">
-															<h5 class="card-title">Card title</h5>
-															<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-															<a href="#" class="btn btn-primary">Go somewhere</a>
-														</div>
-													</div>
-												</div>
+															<div class="col mt-4 ml-4">	
+																<div class="card" style="width: 18rem;">
+																	<img src="/food/<%=file[i].image%>" class="card-img-top" alt="Err" style="height: 15rem;">
+																	<div class="card-body">
+																		<h5 class="card-title">Name : <%=file[i].title%></h5>
+																		<h5 class="card-title">Cost : <%=file[i].cost%></h5>
+																		<%if(allow){%>
+																			<a href="/menu/delete/<%=file[i].title%>/<%=file[i].image%>" class="btn btn-primary">Delete</a>
+																		<%}%>
+																	</div>
+																</div>
+															</div>
+													<%}}%>
 													
 
 
@@ -77,19 +86,22 @@
 									<div class="card-deck">	
 										<div class="row">	
 											
-											
-											<div class="col mt-4 ml-4">	
-												<div class="card" style="width: 18rem;">
-													<img src="/food3.jpg" class="card-img-top" alt="..." style="height: 15rem;">
-													<div class="card-body">
-														<h5 class="card-title">Card title</h5>
-														<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-														<a href="#" class="btn btn-primary">Go somewhere</a>
+									<%for(i=0;i<file.length;i++){
+											if(file[i].food=="fast food"){%>		
+													<div class="col mt-4 ml-4">	
+														<div class="card" style="width: 18rem;">
+															<img src="/food/<%=file[i].image%>" class="card-img-top" alt="..." style="height: 15rem;">
+															<div class="card-body">
+																<h5 class="card-title">Name : <%=file[i].title%></h5>
+																<h5 class="card-title">Cost : <%=file[i].cost%></h5>
+																<%if(allow){%>
+																	<a href="/menu/delete/<%=file[i].title%>/<%=file[i].image%>" class="btn btn-primary">Delete</a>
+																<%}%>
+															</div>
+														</div>
 													</div>
-												</div>
-											</div>
 
-
+											<%}}%>
 
 										</div>
 									</div>
@@ -100,19 +112,22 @@
 									<div class="card-deck">	
 										<div class="row">	
 
-
-											<div class="col-sm-4">	
-												<div class="card" style="width: 18rem;">
-													<img src="/food3.jpg" class="card-img-top" alt="..." style="height: 15rem;">
-													<div class="card-body">
-														<h5 class="card-title">Card title</h5>
-														<p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-														<a href="#" class="btn btn-primary">Go somewhere</a>
-													</div>
-												</div>
-											</div>
+											<%for(i=0;i<file.length;i++){
+											if(file[i].food=="sweets"){%>	
+														<div class="col mt-4 ml-4">	
+															<div class="card" style="width: 18rem;">
+																<img src="/food/<%=file[i].image%>" class="card-img-top" alt="..." style="height: 15rem;">
+																<div class="card-body">
+																	<h5 class="card-title">Name : <%=file[i].title%></h5>
+																	<h5 class="card-title">Cost : <%=file[i].cost%></h5>
+																	<%if(allow){%>
+																		<a href="/menu/delete/<%=file[i].title%>/<%=file[i].image%>" class="btn btn-primary">Delete</a>
+																	<%}%>
+																</div>
+															</div>
+														</div>
 											
-											
+												<%}}%>
 
 										</div>
 									</div>
