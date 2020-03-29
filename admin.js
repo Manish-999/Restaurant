@@ -326,6 +326,8 @@ app.post("/amount/:id",check.admin,(req,res)=>{
 
 
 /////////////////////////  CLIENT PAYING HIS BORRROW  ///////////////////////////////////
+
+
 app.get("/paid/:id/:date",check.admin,(req,res)=>{
    fs.open("./file/"+req.params.id+".txt","a+",(err,fd)=>{
          if(err){

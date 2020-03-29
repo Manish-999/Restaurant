@@ -14,7 +14,6 @@ var passportss=require("./passport/passport.js")
 var cookieParser = require('cookie-parser')
 const MongoStore = require('connect-mongo')(session);
 var admin=require("./admin.js")
-var client=require("./client.js")
 var fs=require("fs")
 var multer=require("multer")
 
@@ -195,6 +194,7 @@ app.get("/menu",(req,res)=>{
 })
 
 
+//////////////////////////////////  MENU UPDATE //////////////////////////////////////
 
 app.route("/menu/add",(req,res,next)=>{
     next()
@@ -251,6 +251,9 @@ app.get("/menu/delete/:id/:id2",(req,res)=>{
            }
         })
 })
+
+
+
 //////////////////////////  checker  ////////////////////////////
 
 app.get("/checker",(req,res)=>{
@@ -291,7 +294,6 @@ app.get("/summery/:id",checkAC.allowSummery,(req,res)=>{
 
 
 app.use("/admin",admin)
-app.use("/client",client)
 
 
 app.listen(3000,()=>{
