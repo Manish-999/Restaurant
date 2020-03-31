@@ -44,7 +44,7 @@ app.use(passport.session());
 
 var storage = multer.diskStorage({
     destination: function (req, file, cb) {
-      cb(null, './public/food')
+      cb(null, __dirname+'/public/food/')
     },
     filename: function (req, file, cb) {
       cb(null, file.fieldname + '-' + Date.now()+"-"+file.originalname)
@@ -257,6 +257,9 @@ app.get("/menu/delete/:id/:id2",(req,res)=>{
 //////////////////////////  checker  ////////////////////////////
 
 app.get("/checker",(req,res)=>{
+    console.log("some technical work delayyyy")
+    console.log("some technical work delayyyy")
+    console.log("some technical work delayyyy")
     if(req.user){
         if(req.user.who=="client"){
             user.findOne({uname:req.user.uname},(err,file)=>{
@@ -268,13 +271,15 @@ app.get("/checker",(req,res)=>{
                 }
             })
             
+        }else{
+            if(req.user.who=="admin"){
+                emp.find({},(err,file)=>{
+                    
+                res.render("admin/index",{data:file})
+                })
+            }
         }
-        if(req.user.who=="admin"){
-            emp.find({},(err,file)=>{
-                
-            res.render("admin/index",{data:file})
-            })
-        }
+        
     }
     else{
         res.render("home.ejs",{member:true})
@@ -296,6 +301,6 @@ app.get("/summery/:id",checkAC.allowSummery,(req,res)=>{
 app.use("/admin",admin)
 
 
-app.listen(3000,()=>{
+app.listen(process.envPORT||3000,()=>{
     console.log("listening port 3000")
 })
