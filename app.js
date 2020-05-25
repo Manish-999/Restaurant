@@ -67,7 +67,11 @@ var storage = multer.diskStorage({
                       }).single("image")
  
 
-
+app.use(function(request, response){
+    if(!request.secure){
+        response.redirect("https://" + request.headers.host + request.url);
+    }
+});
 
 //////////////  INDEX PAGE  /////////////////////
 
